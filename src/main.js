@@ -20,17 +20,18 @@ function calculateSimpleRevenue(purchase, _product) {
  * @returns {number}
  */
 function calculateBonusByProfit(index, total, seller) {
+     const { profit } = seller;
 
     if (total === 0) {
-      return 0.15;
+      return profit * 0.15;
     } else if (index === 0) {
-        return 0.15;
+         return profit * 0.15;
     } else if (index === 1 || index === 2) {
-        return 0.10;
+        return profit * 0.10;
     } else if (index === total - 1) {
         return 0;
     } else  {
-        return 0.05;
+        return profit * 0.05;
      }
 }
 
@@ -113,8 +114,7 @@ function analyzeSalesData(data, options) {
         seller.top_products = Array.from(seller.products_sold.entries())
             .map(([sku, quantity]) => ({
                 sku,
-                quantity,
-                product_name: productIndex[sku]?.name || 'Неизвестный товар'
+                quantity
             }))
             .sort((a, b) => b.quantity - a.quantity)
             .slice(0, 10); 
@@ -125,10 +125,7 @@ function analyzeSalesData(data, options) {
     revenue: +seller.revenue.toFixed(2), // Число с двумя знаками после точки, выручка продавца
     profit: +seller.profit.toFixed(2), // Число с двумя знаками после точки, прибыль продавца
     sales_count: seller.sales_count, // Целое число, количество продаж продавца
-    top_products: seller.top_products.map(product => ({
-        sku: product.sku, // Строка, идентификатор товара
-        quantity: product.quantity // Целое число, количество проданных единиц
-    })), // Массив объектов вида: { "sku": "SKU_008", "quantity": 10 }, топ-10 товаров продавца
+    top_products: seller.top_products,
     bonus: +seller.bonus.toFixed(2) // Число с двумя знаками после точки, бонус продавца
    }));
 }
