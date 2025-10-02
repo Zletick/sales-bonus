@@ -122,11 +122,11 @@ function analyzeSalesData(data, options) {
      return sellerStats.map(seller => ({
     seller_id: seller.seller_id, // Строка, идентификатор продавца
     name: seller.name, // Строка, имя продавца
-    revenue: +seller.revenue.toFixed(2), // Число с двумя знаками после точки, выручка продавца
-    profit: +seller.profit.toFixed(2), // Число с двумя знаками после точки, прибыль продавца
+    revenue: Math.round(seller.revenue * 100) / 100, // Число с двумя знаками после точки, выручка продавца
+    profit: Math.round(seller.profit * 100) / 100, // Число с двумя знаками после точки, прибыль продавца
     sales_count: seller.sales_count, // Целое число, количество продаж продавца
     top_products: seller.top_products,
-    bonus: +seller.bonus.toFixed(2) // Число с двумя знаками после точки, бонус продавца
+    bonus: Math.round(seller.bonus * 100) / 100 // Число с двумя знаками после точки, бонус продавца
    }));
 }
    
